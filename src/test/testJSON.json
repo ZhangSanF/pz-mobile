@@ -1,0 +1,56 @@
+{
+    "indexImg": [
+        "https://m.pz77.com/UF/Uploads/Article/1552820187.png",
+        "https://m.pz77.com/UF/Uploads/Article/1552820171.png",
+        "https://m.pz77.com/UF/Uploads/Article/1553924918.png",
+        "https://m.pz77.com/UF/Uploads/Article/1555046477.png"
+    ],
+    "gridMenu":[
+        {
+            "name":"新手指引",
+            "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu1.png"
+        },
+        {
+            "name":"每日签到",
+            "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu3.png",
+            "path":""
+        },
+        {
+            "name":"推广赚钱",
+            "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu5.png",
+            "path":"/user/reg"
+        },
+        {
+            "name":"关于我们",
+            "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu5.png",
+            "path":"/user/login"
+        }
+
+    ],
+    "productData" : [
+        {
+            "leftTitle":"免",
+            "title":"免息配资",
+            "dividedText":"盈利80%全归您,平台不收取利息费用",
+            "class":"free"
+        },
+        {
+            "leftTitle":"天",
+            "title":"按天配资",
+            "dividedText":"利息用几天算几天,短线投资更便捷",
+            "class":"day"
+        },
+        {
+            "leftTitle":"月",
+            "title":"按月配资",
+            "dividedText":"长线配资更划算,利息最低0.6%",
+            "class":"mouth"
+        },
+        {
+            "leftTitle":"vip",
+            "title":"VIP配资",
+            "dividedText":"利息减半,VIP服务",
+            "class":"vip"
+        }
+    ]
+}

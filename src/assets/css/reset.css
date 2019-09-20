@@ -1,0 +1,40 @@
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+address,
+del,
+em,
+img,
+strong,
+sub,
+sup,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+form,
+label,
+caption {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-decoration: none;
+  outline: 0;
+  list-style: none;
+}
+
+body, html {
+  height: 100%;
+  background: #f7f7f7;
+}

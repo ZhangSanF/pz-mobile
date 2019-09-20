@@ -1,0 +1,38 @@
+@function px2rem($px,$flag:true){ //$flag => true 表示正数  反之 负数
+    $rem : 64px;
+    @if($flag){
+        @return ($px/$rem) + rem;
+    }
+    @else{
+        @return -($px/$rem) + rem;
+    }
+}
+
+// 主题色
+$home-color :#FD591E;
+// 线
+$home-line-color :#e3e3e3;
+// 个人中心
+.user-container {
+    position: absolute;
+    top: px2rem(88px);
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+}
+.user-container-m {
+    position: absolute;
+    top: px2rem(108px);
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+}
+// tab
+.van-tab{
+    font-size: px2rem(26px);
+    color: #666;
+}
+.van-tabs__line{
+    height: px2rem(2px);
+    background-color: $home-color;
+}
