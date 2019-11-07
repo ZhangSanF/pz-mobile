@@ -6,7 +6,6 @@
 
 <script>
   import BScroll from 'better-scroll'
-  // import BScroll from 'better-scroll'
   import { mapGetters, mapState } from 'vuex';
   export default {
     props: {
@@ -57,11 +56,6 @@
         type: Boolean,
         default: false
       },
-      /** * [自定]是否派发顶部下拉的事件，用于下拉刷新 */
-      // pullDown: {
-      //   type: Boolean,
-      //   default: false
-      // },
       /** * 是否派发顶部下拉的事件，用于下拉刷新 */
       pulldown: {
         type: Boolean,
@@ -111,9 +105,15 @@
         })
         // 是否派发滚动事件
         if (this.listenScroll) {
-          let me = this
+          let me = this          
           this.scroll.on('scroll', (pos) => {
-            me.$emit('scroll', pos)
+            this.scroll.hasVerticalScroll = true
+            // console.log(pos)          
+            if(pos.y > 20) {
+              me.$emit('scroll', pos)
+            }else {
+              this.$store.commit('RELEASE_REFRESH', false)
+            }
           })
         }
         // 是否派发滚动到底部事件，用于上拉加载
@@ -126,23 +126,13 @@
             }
           })
         }
-        // if(this.pullDown){
-        //   let me = this
-        //   this.scroll.on('scroll', (pos) => {
-        //     if(pos.y > 30){
-        //       me.$emit('topRefresh', pos)
-        //     }
-            
-        //   })
-        // }
         // 是否派发顶部下拉事件，用于下拉刷新
         if (this.pulldown) {
           this.scroll.on('touchEnd', (pos) => {
-            // 下拉动作
-            // console.log(pos);
+            // console.log(pos)
+            // 下拉动作           
             if (pos.y > 20) {
               this.$emit('topRefresh')
-              // console.log('pulldown');
             }
           })
         }

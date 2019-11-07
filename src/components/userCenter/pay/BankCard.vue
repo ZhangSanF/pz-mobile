@@ -2,7 +2,7 @@
   <div class="scan-pay">
     <SecondHader :headerTitle="name"/>
     <scroll class="user-container" :click="false" :data="scrollDatas">
-      <div>
+      <div class="bank-box">
         <div class="title">请转账到以下账户</div>
           <div v-if="payItems">
               <div
@@ -12,10 +12,14 @@
                 @click="payIndex = index"
                 class="carList"
               >
-                <!-- <p>
+                <p class="radio-style">
                   <label v-if="id == 'alipay_bank'" >支付宝</label>
                   <label v-else>银行卡</label>
-                </p> -->
+                    <span>
+                      <i class="font_family icon-dagou" v-show="payIndex == index"></i>
+                      <i class="font_family icon-weigouxuan1" v-show="payIndex != index"></i>
+                    </span>
+                </p>
                 <!-- <p>请转账到以下账户：</p> -->
                 <div v-if="id == 'alipay_bank'" class="scanShow">
                   <p class="label">
@@ -81,11 +85,16 @@
                       v-clipboard:copy="paydata[index].card_num"
                     >复制</label>
                   </p>
+                  <p class="label">
+                    开户行地址：{{paydata[index].bank_adress}}
+                    <label
+                      class="copyBtn"
+                      v-clipboard:success="onCopy"
+                      v-clipboard:error="onError"
+                      v-clipboard:copy="paydata[index].bank_adress"
+                    >复制</label>
+                  </p>
                 </div>
-                <!-- <p
-                  v-if="parseFloat(paydata[index].rebate) > 0"
-                  class="label rebateText"
-                >当前支付方式赠送充值金额的{{parseFloat(paydata[index].rebate)}}%</p> -->
                 <p
                   class="redFont fontSize12"
                   v-if="paydata[index].int_limit_type != 0"
@@ -107,22 +116,20 @@
                 <van-field v-model="money" placeholder="请输入充值金额" label="转账金额" type="number"/>
               </van-cell-group>
               <van-cell-group>
-                <van-field v-model="date" placeholder="点击选择时间" label="转账时间" @click="showPopup"/>
+                <van-field v-model="date" placeholder="点击选择时间" label="转账时间" @click="showPopup" readonly/>
               </van-cell-group>
-              <van-popup v-model="show" position="bottom">
-                <van-datetime-picker
-                  v-model="dateTime"
-                  type="datetime"
-                  @confirm="confirm"
-                  @cancel="cancel"
-                /> 
-              </van-popup>
             </div>
-            <div class="submitBox">
-              <van-button type="info" @click.native="payAction">提交充值</van-button>
-            </div>
+            <div class="btn-common" @click="payAction">提交充值</div>
         </div>
-    </scroll>     
+    </scroll> 
+    <van-popup v-model="show" position="bottom">
+      <van-datetime-picker
+        v-model="dateTime"
+        type="datetime"
+        @confirm="confirm"
+        @cancel="cancel"
+      /> 
+    </van-popup>    
   </div>
 </template>
 
@@ -173,14 +180,6 @@ export default {
       this.$Toast.fail('复制失败请重试');
     },
 
-    popRadioShow(e) {
-      document.getElementsByClassName("vux-popup-show")[0].style.height = "60%";
-      this.openScrolling();
-    },
-    popRadioHide() {
-      this.stopScrolling();
-    },
-
     payAction() {
       if (this.id == "alipay_bank") {
         if (!this.uname || !this.date || !parseInt(this.money)) {
@@ -215,6 +214,7 @@ export default {
           card_name: this.uname,
           password: '',//不需要
         };
+        // console.log(data)
       this.depositwithdrawplatform(data).then(res => {
         if(res.code == 200){
             this.uname= '';
@@ -259,21 +259,25 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.submitBox {
-  margin-top: px2rem(88px);
-  padding: 0 px2rem(48px);
-  button {
-    height: px2rem(74px);
-    line-height: px2rem(74px);
-    border-radius: 4px;
-    width: 100%;
-    background-color: $home-color;
-    border: none;
-    color: #fff;
-    font-size: px2rem(30);
-    font-weight: 500;
+.bank-box{
+  padding-bottom: px2rem(40px);
+}
+.radio-style{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  i{
+    font-size: px2rem(40px);
+    vertical-align: middle;
+    &.icon-dagou {
+      color: $home-color;
+    }
+    &.icon-weigouxuan1 {
+      color: #bbbbbb
+    }
   }
 }
+
 .label-flex{
   display: flex;
   justify-content: space-between;
@@ -281,12 +285,12 @@ export default {
 }
 .title{
   padding: px2rem(20px) px2rem(30px);
-  font-size: px2rem(28px);
+  font-size: px2rem(34px);
   color: #999;
 }
 
 .label {
-  font-size: px2rem(24px);
+  font-size: px2rem(33px);
   .copyBtn {
     display: inline-block;
     float: right;
@@ -299,15 +303,17 @@ export default {
 }
 
 .fontSize12 {
-  font-size: px2rem(24px);
+  font-size: px2rem(30px);
 }
 .carList {
-  padding: px2rem(10px) px2rem(15px);
+  padding: px2rem(10px) px2rem(20px);
   background-color: #fff;
   line-height: 35px;
-  font-size: px2rem(28px);
+  font-size: px2rem(33px);
+  margin-bottom: 1px;
 
   &.selected {
+    // background: red;
     .bankinfoShow p {
       color: #333;
     }
@@ -328,5 +334,10 @@ export default {
 .scanShow {
   padding: 4px 10px;
   text-align: center;
+}
+.user-content {
+  .van-cell{
+    font-size: px2rem(33px);
+  }
 }
 </style>

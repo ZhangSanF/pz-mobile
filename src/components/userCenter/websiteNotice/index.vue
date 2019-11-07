@@ -30,7 +30,7 @@ export default {
       getAnnouncement: [],
       actionData: {
         page: 1,
-        page_size: 20,
+        page_size: 30,
         category_identification: 'announcement'
       }
     }
@@ -88,20 +88,19 @@ export default {
       padding: px2rem(20px) px2rem(30px) px2rem(20px) 0;
       border-bottom: px2rem(1px) solid $home-line-color;
       align-items: center;
-      font-size: px2rem(26px);
+      font-size: px2rem(33px);
       .title{
-        width: px2rem(550px);
+        width: px2rem(600px);
         height: px2rem(38px);
         line-height: px2rem(38px);
         color: #333;
-        font-weight: bold;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
       .icon-style{
         color: #999;
-        font-size: px2rem(20px);
+        font-size: px2rem(26px);
       }
     }   
     .list-item:last-child{

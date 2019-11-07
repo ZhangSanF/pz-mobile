@@ -14,7 +14,7 @@
           </van-cell-group>
         </div>
         <div class="inputBox">
-          <p class="title">输入提款密码</p>
+          <p class="title">输入支付密码</p>
           <van-cell-group>
             <van-field 
             v-model="password" 
@@ -25,12 +25,10 @@
 
         <div class="infoBox">
           <p>提现说明</p>
-          <p class="pass-notice">如果您没有或者忘记了提款密码，<br>请到首页“个人中心”-“安全设置”设置提款密码，如有疑问请联系客服处理！</p>
+          <p class="pass-notice">如果您没有或者忘记了支付密码，<br>请到首页“个人中心”-“安全设置”设置支付密码，如有疑问请联系客服处理！</p>
         </div>
 
-        <div class="submitBox">
-          <van-button type="info" @click.native="drawAction">确认提现</van-button>
-        </div>
+        <div class="btn-common" @click="drawAction">确认提现</div>
       </div>
     </scroll>
   </div>
@@ -56,9 +54,16 @@
         // 未实名认证跳转
         if(!this.getUserInfo.is_real_name) {
             this.$Dialog.alert({
-                message: '您还未完成身份验证，请先进行实名认证'
+              message: '您还未完成身份验证，请先进行实名认证'
             });
             this.$router.replace('/realName')
+        }
+        // 未绑定银行卡跳转
+        if(!this.getUserInfo.bank_card_number && !this.getUserInfo.bank_name) {
+          this.$Dialog.alert({
+            message: '您还未绑定银行卡，请先绑定银行卡'
+          });
+          this.$router.replace('/bankInfo')
         }
     },
     mounted() {
@@ -96,7 +101,7 @@
 <style scoped lang="scss">  
 .title{
   padding: px2rem(20px) px2rem(30px);
-  font-size: px2rem(28px);
+  font-size: px2rem(34px);
   color: #999;
 }
   .infoBox{

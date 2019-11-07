@@ -173,10 +173,10 @@ export function transacTionrecord(params) {
     return axios.post(urls.transacTionrecordApi(),params);
 }
 
-//提现记录
-export function withdrawalrecord(params) {
+//充值提现记录
+export function paymenTrecord(params) {
     if(!params && params !== Object ) return false
-    return axios.post(urls.withdrawalrecordApi(),params);
+    return axios.post(urls.paymenTrecordApi(),params);
 }
 
 //短信验证码(发送)
@@ -230,3 +230,28 @@ export function contract(params) {
 export function loansrate() {
     return axios.get(urls.loansrateApi());
 }
+
+// 剩余期数(扩大配资，时使用)
+export function remainingPeriod(params) {
+    if(!params && params !== Object ) return false
+    return axios.get(urls.remainingPeriodApi(),params);
+}
+
+// 延期利息(终止操盘，时使用)
+export function interestMoneybyend(params) {
+    if(!params && params !== Object ) return false
+    return axios.get(urls.interestMoneybyendApi(),params);
+}
+
+// 初始化手机号码
+export function initMobile(params) {
+    if(!params && params !== Object ) return false
+    return axios.post(urls.initMobileApi(),params);
+}
+
+// 获取交易端登录令牌
+export function getStockSignature(params) {
+    if(!params && params !== Object ) return false
+    return axios.post(urls.getStockSignature(),params);
+}
+

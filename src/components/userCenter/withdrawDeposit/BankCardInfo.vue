@@ -47,7 +47,7 @@
       text-shadow: 1px 1px 1px #777;
       color: #fff;
       height: 100%;
-      padding: px2rem(12px);
+      padding: px2rem(30px) px2rem(20px);
       position: relative;
       .head {
         padding: 0 px2rem(10px) px2rem(10px);

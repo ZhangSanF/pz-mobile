@@ -17,11 +17,14 @@ export const login = ({commit, state},params) =>{
 export const isLogin = ({commit, state, dispatch}) =>{
   return api.isLogin().then(res=>{
       if( res.code == 200){
+          console.log();
           commit(types.IS_LOGIN, res.data.info)
           if(res.data.info == true) {
               // 获取个人信息
               dispatch('getMemberinfo')
           }
+      }else {
+        Vue.prototype.$Toast('初始化失败,请检查网络')
       }
   })
 }
@@ -35,10 +38,13 @@ export const getVerify = ({commit, state}) =>{
 export const logout = ({commit, state}) =>{
   return api.logout().then(res=>{
       if(res.code == 200){
+          
           router.push('/')
           commit(types.SAVE_USER_INFO, {})
           commit(types.IS_LOGIN, false)     
 
+      }else {
+        Vue.prototype.$Toast('网络错误,请重试')
       }
   })
 }
@@ -57,7 +63,7 @@ export const verifySmsCode = ({commit, state},params) =>{
 export const getAdvertisement = ({commit, state},params) =>{
   return api.getAdvertisement(params).then(res=>{
       if( res.code == 200){
-          commit(types.PC_INDEX_CAROUSEL, res.data.pc_index_carousel)// 轮播
+          commit(types.PC_INDEX_CAROUSEL, res.data.mobile_index_carousel)// 轮播
       }
   })
 }
@@ -84,6 +90,11 @@ export const setting = ({commit, state}) =>{
         commit(types.SETTING_DAYS, res.data.credit.day) // days
         commit(types.SETTING_MONTHS, res.data.credit.month) // months
         commit(types.SETTING_VIP, res.data.credit.vip) // vip
+
+        //系统配置
+        commit(types.SETTING_SYSTEM, res.data.system)
+      }else {
+        Vue.prototype.$Toast('初始化失败,请检查网络')
       }
   })
 }
@@ -193,12 +204,7 @@ export const bankList = ({commit, state}) =>{
 
 //配资单申请
 export const addOrder = ({commit, state},params) =>{
-  return api.addOrder(params).then(res=>{
-      if(res.code == 200){
-          Message.success(res.message)
-          router.push('/member/myAccount')
-      }
-  })
+  return api.addOrder(params)
 }
 
 //获取个人信息
@@ -225,9 +231,9 @@ export const transacTionrecord = ({commit, state},params) =>{
   return api.transacTionrecord(params)
 }
 
-//提现记录
-export const withdrawalrecord = ({commit, state},params) =>{
-  return api.withdrawalrecord(params)
+//充值提现记录
+export const paymenTrecord = ({commit, state},params) =>{
+  return api.paymenTrecord(params)
 }
 
 //用户是否存在
@@ -271,4 +277,36 @@ export const loansrate = ({commit, state}) =>{
           commit(types.LOANSRATE_DATA, res.data)
       }
   })
+}
+
+// 剩余期数(扩大配资，时使用)
+export const remainingPeriod = ({commit, state},params) =>{
+  return api.remainingPeriod(params).then(res =>{
+      if(res.code == 200) {
+          commit(types.PERIOD_NUMBER, res.data)
+      }
+  })
+}
+
+// 延期利息(终止操盘，时使用)
+export const interestMoneybyend = ({commit, state},params) =>{
+  return api.interestMoneybyend(params).then(res =>{
+      if(res.code == 200) {
+          commit(types.INTEREST_MONEY, res.data)
+      }
+  })
+}
+
+// 初始化手机号码
+export const initMobile = ({commit, state},params) =>{
+  return api.initMobile(params)
+}
+
+// 获取交易端登录令牌
+export const getStockSignature = ({commit, state},params) =>{
+  return new Promise((resolve, reject) => {
+        api.getStockSignature(params).then(res => {
+            resolve(res);
+        })
+    })
 }

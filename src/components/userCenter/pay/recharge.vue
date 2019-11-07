@@ -136,12 +136,12 @@ export default {
       }
       .title {
         font-weight: 400;
-        font-size: px2rem(32px);
+        font-size: px2rem(34px);
         color: #333;
       }
       .detail {
         color: #999999;
-        font-size: px2rem(24px);
+        font-size: px2rem(28px);
       }
     }
   }

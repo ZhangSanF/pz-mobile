@@ -1,7 +1,7 @@
 <template>
   <div class="add-bank">
     <SecondHader headerTitle="添加银行卡"/>
-    <!-- <scroll class="user-container" :click="false" :data="scrollDatas"> -->
+    <scroll class="user-container" :click="false" :data="scrollDatas">
       <div>
         <div class="bank-list">
           <div class="title">请填写身份证信息</div>
@@ -9,9 +9,7 @@
             <li class="list-item">
               <p>持卡人</p>
               <div class="right">
-                  <van-cell-group>
-                      <van-field :placeholder="getUserInfo.real_name" disabled/>
-                  </van-cell-group>
+                <span class="info">{{getUserInfo.real_name}}</span>
               </div>
             </li>
             <li class="list-item">
@@ -22,20 +20,10 @@
                   </van-cell-group>
               </div>
             </li>
-            <li class="list-item">
+            <li class="list-item" @click="showBankList">
               <p>银行</p>
               <div class="right">
-                  <van-dropdown-menu>
-                    <van-dropdown-item ref="item" :title="bankForm.bank_name">
-                      <li 
-                      class="bank-list-item"
-                      v-for="(item, index) in getBankList.banklist" 
-                      :key="index" 
-                      @click="onConfirm(item)">
-                      {{item}}
-                      </li>
-                    </van-dropdown-item>
-                  </van-dropdown-menu>
+                  <span>{{bankForm.bank_name}}</span>
                   <span class="font_family icon-youjiantou icon-style"></span>
               </div>
             </li>
@@ -45,16 +33,9 @@
           <div class="title">请填写开户信息</div>
           <ul class="ul-box">
             <li class="list-item">
-              <p>开户省份</p>
-              <div class="right-fcaa">
-                  <area-select type="text"  v-model="selectedCity" :data="pcaa" :placeholders="[]"></area-select>
-                  <span class="font_family icon-youjiantou icon-style-pcaa"></span>
-              </div>
-            </li>
-            <li class="list-item">
-              <p>开户城市</p>
-              <div class="right">
-                <span></span>
+              <p>开户地址</p>
+              <div class="right" @click="showPopup">
+                <span class="city">{{selectedCity}}</span>
                 <span class="font_family icon-youjiantou icon-style"></span>
               </div>
             </li>
@@ -76,10 +57,10 @@
               <div class="right">
                   <van-cell-group>
                     <van-field :placeholder="getUserInfo.mobile" disabled>
-                      <span @click="getVerify" v-if="isShowSmsCode == 'one'" slot="button" class="verification">发送验证码</span>
+                      <span @click="getVerify" v-if="isShowSmsCode == 'one'" slot="button" class="verification">获取验证码</span>
                       <span v-if="isShowSmsCode == 'two'" slot="button" class="verification">短信发送中...</span>
-                      <span v-if="isShowSmsCode == 'three'" slot="button" class="verification">验证码{{smsCodeNumber}}秒有效</span>
-                      <span @click="getVerify" v-if="isShowSmsCode == 'four'" slot="button" class="verification">重新获取验证码</span>
+                      <span v-if="isShowSmsCode == 'three'" slot="button" class="verification">重新获取({{smsCodeNumber}})</span>
+                      <span @click="getVerify" v-if="isShowSmsCode == 'four'" slot="button" class="verification">重新获取</span>
                     </van-field>
                   </van-cell-group>
               </div>
@@ -94,27 +75,42 @@
             </li>
           </ul>
         </div>
-        <div class="btn-style" @click="add">确定绑卡</div>
+        <div class="btn-common" @click="add">确定绑卡</div>
       </div>
-    <!-- </scroll> -->
+    </scroll>
+    <!-- 开户地址 -->
+    <van-popup v-model="showPacc" position="bottom" :style="{ height: '50%' }">
+      <van-area :area-list="pcaa" @confirm="onConfirm" @cancel="onCancel" :columns-num="2"/>
+    </van-popup>
+    <!-- 银行 -->
+     <!-- 选择银行卡 -->
+    <van-popup v-model="showBank" position="bottom" :style="{ height: '50%' }">
+      <BottomAlert :fatherData="getBankList.banklist" @eimtChange="eimtChange" marker='addBank'/>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import { pcaa } from 'area-data' // v5 or higher
 import { mapGetters, mapActions } from "vuex"
 import Scroll from "@/components/common/scroll"
 import SecondHader from "@/components/common/SecondHader"
-import { smsCodeNumber } from '@/config/rules.js'
+import { smsCodeNumber } from '@/config/rules'
+import { smsCodeMixin } from "@/config/miXin"
+import pcaa from '@/assets/js/pcaa'
+import BottomAlert from "@/components/common/BottomAlert"
 
 export default {
-  components: { Scroll, SecondHader },
+  mixins:[smsCodeMixin],
+  components: { Scroll, SecondHader, BottomAlert },
   data() {
     return {
       scrollDatas: [],
       pcaa: pcaa,
-      selectedCity: [],
+      showBank: false,
+      showPacc: false,
+      selectedCity: '',
       isShowSmsCode: 'one',
+      actionTemplate: 'bank_card',
       smsCodeNumber: smsCodeNumber,
       bankForm: {
         bank_name: '', //开户银行
@@ -131,9 +127,24 @@ export default {
   },
   methods: {
     ...mapActions(['bindBankCard', 'sendSmsCode', 'bankList']),
-    onConfirm(name) {
-      this.$refs.item.toggle();
+    showBankList() {
+      this.showBank = true
+    },
+    eimtChange(name) {
+      this.showBank = false
       this.bankForm.bank_name = name
+    },
+    showPopup() {
+      this.showPacc = true
+    },
+    onConfirm(res) {
+      this.selectedCity = `${res[0].name}${res[1].name}`
+      this.bankForm.bank_province = res[0].name
+      this.bankForm.bank_city = res[1].name
+      this.showPacc = false
+    },
+    onCancel() {
+      this.showPacc = false
     },
     add() {
       if(
@@ -156,38 +167,9 @@ export default {
           }
         })
       }else {
-        this.$Toast.fail('请点击发送手机验证码')
+        this.$Toast.fail('请获取短信验证码')
       } 
-    },
-    // 获取短信验证码
-    getVerify() {
-      let _this = this
-      _this.isShowSmsCode = 'two'
-      let obj = {
-        template: 'bank_card',
-        member_id: _this.getUserInfo.id
-      }
-      _this.sendSmsCode(obj).then((res) => {
-        if(res.code == 200) {
-          _this.$Toast.success(res.message)
-          _this.isShowSmsCode = 'three'
-          let _run = () => {
-            setTimeout(() => {
-              _this.smsCodeNumber--
-              if (_this.smsCodeNumber > 0) {
-                _run();
-              } else {
-                _this.isShowSmsCode = 'four'
-                _this.smsCodeNumber = smsCodeNumber
-              }
-            }, 1000);
-          };
-          _run();
-        }else {
-          _this.isShowSmsCode = 'one'
-        }
-      })
-    },
+    }
   },
   mounted() {
     this.$nextTick(() => {
@@ -198,42 +180,40 @@ export default {
     ...mapGetters(['getUserInfo', 'getBankList'])
   },
   watch:{
-    'selectedCity': {
-      handler(val, b) {
-        this.bankForm.bank_province = val[0]
-        this.bankForm.bank_city = val[1]
-      },
-      deep: true
-    }
+
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .bank-list{
-  font-size: px2rem(28px);
   .title{
     padding: px2rem(20px) px2rem(30px);
     color: #999;
+    font-size: px2rem(34px);
   }
   .ul-box{
     padding-left: px2rem(30px);
     background: #fff;
     .list-item{
+      font-size: px2rem(33px);
       display: flex;
       justify-content: space-between;
       border-bottom: px2rem(1px) solid $home-line-color;
       padding-right: px2rem(30px);
       height: px2rem(80px);
-      box-sizing: border-box;
+      // box-sizing: border-box;
       align-items: center;
       .right{
         overflow: hidden;
-        width: px2rem(400px);
+        width: px2rem(500px);
         display: flex;
         justify-content: space-between;
         align-items: center;
         height: px2rem(78px);
+        .info{
+          color: #666;
+        }
         .bank-list-item{
           margin-left: px2rem(30px);
           padding: px2rem(20px) 0;
@@ -241,25 +221,13 @@ export default {
         }
         .icon-style{
           color: #999;
-          font-size: px2rem(20px);
+          font-size: px2rem(26px);
         }
         .verification{
           padding: px2rem(11px) px2rem(24px);
           color: #fd591e;
-          border: px2rem(1px) solid #fd591e;
+          border: 1px solid #fd591e;
           border-radius: 4px;
-        }
-      }
-      .right-fcaa{
-        width: px2rem(400px);
-        position: relative;
-        .icon-style-pcaa{
-          position: absolute;
-          right: 0;
-          top: 50%;
-          transform: translate(0, -50%);
-          color: #999;
-          font-size: px2rem(20px);
         }
       }
     }   
@@ -268,20 +236,12 @@ export default {
     }
   }
 }
-.btn-style{
-  margin: px2rem(30px) px2rem(48px) 0;
-  background: $home-color;
-  border-radius: 4px;
-  color: #fff;
-  text-align: center;
-  font-size: px2rem(26px);
-  padding: px2rem(20px) 0;
-}
 </style>
 <style lang="scss">
 .add-bank{
   .van-cell-group{
     .van-cell{
+      font-size: px2rem(33px);
       padding: 0;
       height: px2rem(80px);
       line-height: px2rem(80px);
@@ -321,6 +281,7 @@ export default {
   }
   .area-select .area-selected-trigger{
     padding: 0;
+    font-size: px2rem(33px);
   }
 }
 </style>

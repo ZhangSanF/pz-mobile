@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="auto-pay">
     <SecondHader :headerTitle="name"/>
     <scroll class="user-container" :click="false" :data="scrollDatas">
       <div>
@@ -44,35 +44,25 @@
           </ul>
         </div>
         <div v-if="payInfo && payInfo.banklist && bankItems">
-          <van-action-sheet
-            v-model="bankIndex"
-            :actions="bankItems"
-          />
-          <!-- <popup-radio
-            title="选择银行"
-            @on-show="popRadioShow()"
-            @on-hide="popRadioHide()"
-            class="pop"
-            :options="bankItems"
-            v-model="bankIndex"
-            placeholder="请选择"
-          >
-            <p slot="popup-header" class="vux-1px-b demo3-slot">请选择银行</p>
-            <template slot-scope="props" slot="each-item">
-              <p>
-                {{ bankItems[props.index].value }}
-                <br>
-              </p>
-            </template>
-          </popup-radio> -->
+          <ul class="ul-box">
+            <li class="list-item" @click="showPopup">
+              <p>选择银行</p>
+              <div class="right">               
+                <span>{{bankIndex}}</span>
+                <span class="font_family icon-youjiantou icon-style"></span>
+              </div>
+            </li>
+          </ul>
         </div>
-        <div class="submitBox">
-          <div class="btns">
-            <van-button type="info" @click.native="payAction">提交充值</van-button>
-          </div>
-        </div>
+        <div class="btn-common" @click="payAction">提交充值</div>
       </div>
     </scroll>
+
+    <!-- 选择银行卡 -->
+    <van-popup v-model="show" position="bottom" :style="{ height: '50%' }">
+      <BottomAlert :fatherData="bankItems" @eimtChange="eimtChange" marker='autoPay'/>
+    </van-popup>
+
     <form method="post" ref="payForm" :action="formData.requestUrl">
       <input
         type="hidden"
@@ -89,16 +79,18 @@
 import { mapActions, mapGetters } from "vuex"
 import Scroll from "@/components/common/scroll"
 import SecondHader from "@/components/common/SecondHader"
+import BottomAlert from "@/components/common/BottomAlert"
 
 export default {
   name: "AutoPay",
-  components: { Scroll, SecondHader },
+  components: { Scroll, SecondHader, BottomAlert },
   data() {
     return {
+      show: false,
       scrollDatas: [],
       payIndex: 0,
       money: "",
-      bankIndex: 0,
+      bankIndex: '请选择银行卡',
       formData: {},
       requestData: {},
       payIcons: {
@@ -139,7 +131,13 @@ export default {
         return "支付通道";
       }
     },
-
+    showPopup() {
+      this.show = true
+    },
+    eimtChange(text) {
+      this.show = false
+      this.bankIndex = text
+    },
     payAction() {
       if (!parseFloat(this.money)) {
         this.$Toast.fail('请输入金额');
@@ -156,18 +154,25 @@ export default {
           return;
         }
       }
+
+      if(this.bankItems) {
+        if(this.bankIndex === '请选择银行卡') { return this.$Toast.fail('请选择银行卡'); }
+      }
+
       var data = {
         method: "thirdPayment",
         order_amount: this.money,
         bank_code: this.bankInfo ? this.bankInfo.bankcode : "",// 有就传
-        bank_type: this.bankInfo ? this.bankInfo.banktype : "",// 有就传
+        // bank_type: this.bankInfo ? this.bankInfo.banktype : "",// 有就传
         pay_id: this.payInfo.id,
         card_num: '', //不需要
         card_name: '',//不需要
         password: ''//不需要
       };
+
       this.depositwithdrawplatform(data).then(res => {
         if (res.code == 200) {
+          // console.log(res.data)
           switch (res.data.requestType) {
             case "form":
               this.formData = res.data;
@@ -240,15 +245,15 @@ export default {
       if (this.payInfo && this.payInfo.banklist) {
         var res = [];
         var data = this.payInfo.banklist;
-        for (var i = 0; i < data.length; i++) {
-          res.push({ key: i, value: data[i].bankname });
+        for(let item in data) {
+          res.push({ text: item, value: item });
         }
         return res;
       }
     },
     bankInfo() {
       if (this.bankItems) {
-        return this.payInfo.banklist[this.bankIndex];
+        return this.payInfo.banklist[this.bankIndex]
       }
     }
   }
@@ -257,10 +262,47 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.bank-list-item{
+  font-size: px2rem(30px);
+  margin-left: px2rem(30px);
+  padding: px2rem(20px) 0;
+  border-bottom: px2rem(1px) solid $home-line-color;
+}
+.ul-box{
+  margin-top: px2rem(20px);
+  background: #fff;
+  padding-left: px2rem(30px);
+  .list-item{
+      display: flex;
+      justify-content: space-between;
+      border-bottom: px2rem(1px) solid $home-line-color;
+      padding-right: px2rem(30px);
+      height: px2rem(80px);
+      box-sizing: border-box;
+      align-items: center;
+      color: #333;
+      font-size: px2rem(28px);          
+      .right{
+          overflow: hidden;
+          width: px2rem(500px);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: px2rem(78px);
+          .icon-style{
+              color: #999;
+              font-size: px2rem(20px);
+          }
+      }
+  }   
+  .list-item:last-child{
+      border-bottom: none;
+  }     
+}
 .inputBox {
   p {
     padding: px2rem(20px) px2rem(30px);
-    font-size: px2rem(28px);
+    font-size: px2rem(34px);
     color: #999;
   }
 }
@@ -283,7 +325,7 @@ export default {
 .payRadioContainer {
   .title {
     padding: px2rem(20px) px2rem(30px);
-    font-size: px2rem(28px);
+    font-size: px2rem(34px);
     color: #999;
   }
   .paylist {
@@ -308,13 +350,13 @@ export default {
         flex: 1;
         padding: px2rem(20px) 0;
         h4 {
-          font-size: px2rem(32px);
+          font-size: px2rem(34px);
           color: #333;
           font-weight: 400;
           padding: 0;
         }
         p {
-          font-size: px2rem(20px);
+          font-size: px2rem(24px);
           color: #999999;
         }
         .tips{
@@ -348,5 +390,23 @@ export default {
       }
     }
   }
+}
+</style>
+<style lang="scss">
+.auto-pay{
+    .van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
+        border: none
+    }
+    .van-dropdown-menu{
+        height: 100%;
+        width: 100%;
+    }
+    .van-dropdown-menu__title::after{
+        display: none;
+    }
+    .van-dropdown-menu__title{
+        width: 100%;
+        padding: 0;
+    }
 }
 </style>

@@ -2,16 +2,13 @@
     <div class="user">
         <SecondHader headerTitle="个人信息"/>
         <scroll class="user-container-m" :click="false" :data="scrollDatas">
-            <div>
+            <div class="user-box">
                 <div class="user-info">
                     <ul class="ul-box">
                         <li class="list-item">
                             <p>用户名</p>
                             <p class="right">
                                 <span class="info">{{getUserInfo.username}}</span>
-                                <span>
-                                    <span class="font_family icon-youjiantou icon-style"></span>
-                                </span>
                             </p>
                         </li>
                         <li class="list-item">
@@ -20,7 +17,6 @@
                                 <span class="info">{{getUserInfo.real_name}}</span>
                                 <span>
                                     <span class="isVerifi">{{getUserInfo.is_real_name ? '已认证' : '未认证'}}</span>
-                                    <span class="font_family icon-youjiantou icon-style"></span>
                                 </span>
                             </p>
                         </li>
@@ -30,7 +26,6 @@
                                 <span class="info">{{getUserInfo.identity_number}}</span>
                                 <span>
                                     <span class="isVerifi">{{getUserInfo.is_real_name ? '已认证' : '未认证'}}</span>
-                                    <span class="font_family icon-youjiantou icon-style"></span>
                                 </span>
                             </p>
                         </li>
@@ -40,7 +35,6 @@
                                 <span class="info">{{getUserInfo.mobile}}</span>
                                 <span>
                                     <span class="isVerifi">已认证</span>
-                                    <span class="font_family icon-youjiantou icon-style"></span>
                                 </span>
                             </p>
                         </li>
@@ -48,52 +42,83 @@
                             <p>性别</p>
                             <p class="right">
                                 <span class="info">{{getUserInfo.gender == true ? '男' : '女'}}</span>
-                                <span>
-                                    <span class="font_family icon-youjiantou icon-style"></span>
-                                </span>
+                            </p>
+                        </li>
+                        <li class="list-item">
+                            <p>学历</p>
+                            <p class="right">
+                                <span class="info">{{getUserInfo.education}}</span>
+                            </p>
+                        </li>
+                        <li class="list-item">
+                            <p>省份</p>
+                            <p class="right">
+                                <span class="info">{{getUserInfo.province}}</span>
+                            </p>
+                        </li>
+                        <li class="list-item">
+                            <p>城市</p>
+                            <p class="right">
+                                <span class="info">{{getUserInfo.city}}</span>
+                            </p>
+                        </li>
+                        <li class="list-item">
+                            <p>地区</p>
+                            <p class="right">
+                                <span class="info">{{getUserInfo.area}}</span>
                             </p>
                         </li>
                         <li class="list-item">
                             <p>通讯地址</p>
                             <p class="right">
                                 <span class="info">{{getUserInfo.address}}</span>
-                                <span>
-                                    <span class="font_family icon-youjiantou icon-style"></span>
-                                </span>
-                            </p>
-                        </li>
-                        <li class="list-item">
-                            <p>月收入</p>
-                            <p class="right">
-                                <span class="info">{{getUserInfo.monthly_income}}</span>
-                                <span>
-                                    <span class="font_family icon-youjiantou icon-style"></span>
-                                </span>
-                            </p>
-                        </li>
-                        <li class="list-item">
-                            <p>职位</p>
-                            <p class="right">
-                                <span class="info">{{getUserInfo.job}}</span>
-                                <span>
-                                    <span class="font_family icon-youjiantou icon-style"></span>
-                                </span>
                             </p>
                         </li>
                         <li class="list-item">
                             <p>婚姻状态</p>
                             <p class="right">
                                 <span class="info">{{getUserInfo.marital_status == '1' ? '已婚' : '未婚'}}</span>
-                                <span>
-                                    <span class="font_family icon-youjiantou icon-style"></span>
-                                </span>
                             </p>
                         </li>
+                        <li class="list-item">
+                            <p>现就职于</p>
+                            <p class="right">
+                                <span class="info">{{getUserInfo.working_company}}</span>
+                            </p>
+                        </li>
+                        <li class="list-item">
+                            <p>职位</p>
+                            <p class="right">
+                                <span class="info">{{getUserInfo.job}}</span>
+                            </p>
+                        </li>
+                        <li class="list-item">
+                            <p>月收入</p>
+                            <p class="right">
+                                <span class="info">{{getUserInfo.monthly_income}}</span>
+                            </p>
+                        </li>
+                        <li class="list-item">
+                            <p>紧急联系人</p>
+                            <p class="right">
+                                <span class="info">{{getUserInfo.emergency_name}}</span>
+                            </p>
+                        </li>
+                        <li class="list-item">
+                            <p>紧急联系人手机</p>
+                            <p class="right">
+                                <span class="info">{{getUserInfo.emergency_mobile}}</span>
+                            </p>
+                        </li>
+                        <li class="list-item">
+                            <p>紧急联系人关系</p>
+                            <p class="right">
+                                <span class="info">{{getUserInfo.emergency_relationship}}</span>
+                            </p>
+                        </li>                        
                     </ul>
                 </div>
-                <div class="bottom-content">
-                    <p class="unLogin" @click="exitLogin">退出登录</p>
-                </div>
+                <div class="btn-common" @click="exitLogin">退出登录</div>
             </div>
         </scroll>
     </div>
@@ -129,6 +154,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.user-box{
+    padding-bottom: px2rem(20px);
+}
 .user-info{
     background: #fff;
     .ul-box{      
@@ -139,42 +167,28 @@ export default {
             padding: px2rem(20px) px2rem(30px) px2rem(20px) 0;
             border-bottom: px2rem(1px) solid $home-line-color;
             align-items: center;
-            font-size: px2rem(28px);
+            font-size: px2rem(33px);
             color: #333;
             .right{
-                width: px2rem(400px);
+                width: px2rem(450px);
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 .info{
-                    color: #999;
+                    color: #666;
                 }
                 .isVerifi{
                     display: inline-block;
-                    padding-right: px2rem(18px);
                     color: rgb(253, 89, 30);
                 }
                 .icon-style{
                     color: #999;
-                    font-size: px2rem(20px);
                 }
             }
         }   
         .list-item:last-child{
             border-bottom: none;
         }     
-    }
-}
-.bottom-content{
-    padding: px2rem(30px) px2rem(48px) 0;
-    font-size: px2rem(26px);
-    .unLogin{
-        padding: px2rem(20px) 0;
-        font-weight: bold;
-        text-align: center;
-        background: $home-color;
-        color: #fff;
-        border-radius: 5px;
     }
 }
 </style>

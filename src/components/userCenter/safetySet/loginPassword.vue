@@ -27,7 +27,7 @@
         </div>
       </li>
     </ul>
-    <div class="real-btn" @click="modifyLoginPwd">确定修改</div>
+    <div class="btn-common" @click="modifyLoginPwd">确定修改</div>
   </div>
 </template>
 
@@ -86,10 +86,9 @@ export default {
       border-bottom: px2rem(1px) solid $home-line-color;
       padding-right: px2rem(30px);
       height: px2rem(80px);
-      box-sizing: border-box;
       align-items: center;
       color: #333;
-      font-size: px2rem(28px); 
+      font-size: px2rem(33px); 
       .right{
         flex: 1;
         padding-left: px2rem(30px);
@@ -104,21 +103,11 @@ export default {
       border-bottom: none;
     }
   }
-  .real-btn{
-    margin: px2rem(30px) px2rem(48px) 0;
-    background: $home-color;
-    border-radius: 4px;
-    color: #fff;
-    text-align: center;
-    font-size: px2rem(26px);
-    padding: px2rem(20px) 0;
-  }
 }
-</style>
-<style lang="scss">
 .login-pwd{
   .van-cell{
     padding: 0;
+    font-size: px2rem(33px);
   }
   .van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
     border: none;

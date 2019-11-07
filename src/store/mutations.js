@@ -4,7 +4,15 @@ const mutations = {
     // 上拉加载更多loading
     [types.SHOW_LOADMORE](state, data) {
         state.showLoadMore = data;
-      },
+    },
+    // 释放下拉刷新
+    [types.RELEASE_REFRESH](state, data) {
+        state.releaseRefresh = data;
+    },
+    // 下拉刷新
+    [types.TOP_REFRESH](state, data) {
+        state.topRefresh = data;
+    },
 
     // 首页今日充值
   [types.DEPOSIT_LIST](state, data) {
@@ -17,6 +25,7 @@ const mutations = {
     // 个人信息
   [types.SAVE_USER_INFO](state, obj) {
       state.userInfo = obj
+      
   },
   // 首页轮播图 //11
   [types.PC_INDEX_CAROUSEL](state, data) {
@@ -49,6 +58,9 @@ const mutations = {
   },
   [types.SETTING_VIP](state, data) {
       state.settingVip = data
+  },
+  [types.SETTING_SYSTEM](state, data) {
+      state.settingSystem = data
   },
 
   //实名认证
@@ -103,6 +115,20 @@ const mutations = {
     //利率/倍数
     [types.LOANSRATE_DATA](state, data) {
         state.loansrate = data
+    },
+
+    //剩余期数(扩大配资，时使用)
+    [types.PERIOD_NUMBER](state, data) {
+        state.periodNumber = data
+    },
+
+    //延期利息(终止操盘，时使用)
+    [types.INTEREST_MONEY](state, data) {
+        state.interestMoney = data
+    },
+    //手机号码&用户名&id&密保
+    [types.USER_FIND](state, data) {
+        state.userFind = data
     },
 };
 

@@ -1,17 +1,23 @@
 <template>
   <div class="indexContent">
-    <div v-show="showHeader" class="header">
-      <van-nav-bar left-arrow>
+    <div v-if="$route.meta.showHeader" class="header">
+      <van-nav-bar left-arrow @click-right="goService">
         <template slot="left">
-          <div class="logo">logo</div>
+            <!-- <van-image
+              style="height:100%;width:auto"
+              
+              lazy-load
+              :src=""
+            /> -->
+            <img :src="getSettingBase.site_mobile_logo" class="mobileLogo" alt="">
         </template>
-        <template slot="right">
-          <div class="service">在线客服</div>
-        </template>
+       <template slot="right">
+         <div class="service">在线客服</div>
+       </template>
       </van-nav-bar>
     </div>
     <div class="mainContainer" 
-      :class="showHeader?'showHeader':'hideHeader'">
+      :class="$route.meta.showHeader?'showHeader':'hideHeader'">
       <router-view @tabChanged="tabChanged" @pzChanged="pzChanged"/>
     </div>
     <footer-nav class="footerNav"/>
@@ -29,17 +35,12 @@
       FooterNav,
       Index,
     },
-    watch:{
-      $route(to,from){
-        this.showHeader =  to.name === 'Index'? true : false
-      }
-    },
     data() {
       return {
         pzTitle: '免息配资', //配资页选中配资类型
         pageTab: 'home', //当前tab页面
         columns:[],
-        showHeader:true
+        showHeader:false
       };
     },
     methods: {
@@ -49,8 +50,15 @@
       pzChanged(type) {
         this.pzTitle = type || '免息配资';
       },
+      goService() {
+        window.open(this.getSettingBase.service_mobile_code); 
+      }
     },
-    
+    computed:{
+      ...mapGetters([
+      'getSettingBase'
+    ]),
+    },
   }
 </script>
 
@@ -87,7 +95,7 @@
       top:0;
     }
     .footerNav {
-      height: px2rem(100px);
+      height: px2rem(85.3px);
       position: absolute;
       bottom: 0;
       width: 100%;
@@ -99,4 +107,10 @@
       background-color: #eee;
     }
   }
+  .van-nav-bar__left, .van-nav-bar__right {
+    top:0;
+  }
+.mobileLogo {
+    height: 98%;
+}
 </style>

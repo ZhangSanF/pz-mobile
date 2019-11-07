@@ -1,0 +1,296 @@
+{
+  "id": "1387209",
+  "name": "配资APP",
+  "font_family": "font_family",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10723824",
+      "name": "未勾选",
+      "font_class": "weigouxuan",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "10724585",
+      "name": "添加",
+      "font_class": "tianjia",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "10724931",
+      "name": "箭头",
+      "font_class": "jiantou",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "10725053",
+      "name": "网站公告-1",
+      "font_class": "wangzhangonggao-",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "10725054",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "10725055",
+      "name": "网站公告",
+      "font_class": "wangzhangonggao",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "10725056",
+      "name": "推荐人",
+      "font_class": "tuijianren",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "10725057",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "10725058",
+      "name": "刷新",
+      "font_class": "shuaxin",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "10725059",
+      "name": "配资-1",
+      "font_class": "peizi-",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "10725060",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "10725061",
+      "name": "交易记录",
+      "font_class": "jiaoyijilu",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "10725062",
+      "name": "配资",
+      "font_class": "peizi",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "10725063",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "10725064",
+      "name": "手机",
+      "font_class": "shouji",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "10725065",
+      "name": "密码",
+      "font_class": "mima",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "10725066",
+      "name": "管理费",
+      "font_class": "guanlifei",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "10725067",
+      "name": "签到",
+      "font_class": "qiandao",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "10725068",
+      "name": "减少",
+      "font_class": "jianshao",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "10725069",
+      "name": "个人",
+      "font_class": "geren",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "10725070",
+      "name": "站内信息",
+      "font_class": "zhanneixinxi",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "10725071",
+      "name": "银行卡",
+      "font_class": "yinhangka",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "10725072",
+      "name": "个人信息",
+      "font_class": "gerenxinxi",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "10725073",
+      "name": "资讯",
+      "font_class": "zixun",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "10725074",
+      "name": "右箭头",
+      "font_class": "youjiantou",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "10725075",
+      "name": "股票",
+      "font_class": "gupiao",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "10725076",
+      "name": "增加",
+      "font_class": "zengjia",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "10725077",
+      "name": "打钩",
+      "font_class": "dagou",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "10725078",
+      "name": "验证码",
+      "font_class": "yanzhengma",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "10725079",
+      "name": "信息",
+      "font_class": "xinxi",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "10874530",
+      "name": "未勾选",
+      "font_class": "weigouxuan1",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "10990539",
+      "name": "筛选",
+      "font_class": "shaixuan",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "10990540",
+      "name": "日历",
+      "font_class": "rili",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "11454947",
+      "name": "撤单",
+      "font_class": "chedan",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "11454948",
+      "name": "资金流水",
+      "font_class": "zijinliushui",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "11454949",
+      "name": "持仓",
+      "font_class": "chicang",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "11454950",
+      "name": "记录",
+      "font_class": "jilu",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "11454974",
+      "name": "关闭",
+      "font_class": "guanbi1",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "11586456",
+      "name": "提现",
+      "font_class": "jiekuan",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "11586457",
+      "name": "充值",
+      "font_class": "cunkuan",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "11588755",
+      "name": "qiandao",
+      "font_class": "qiandao1",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    }
+  ]
+}

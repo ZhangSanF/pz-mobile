@@ -47,14 +47,14 @@ export default {
     .content{
         padding: px2rem(28px) px2rem(30px) px2rem(40px) px2rem(30px);
         background: #fff;
-        font-size: px2rem(26px);
         .title{
+            font-size: px2rem(34px);
             color: #333;
             font-weight: bold;
         }
         .info{
             color: #999;
-            font-size: px2rem(20px);
+            font-size: px2rem(30px);
             text-align: right;
             padding-top: px2rem(20px);
         }

@@ -7,22 +7,22 @@
     ],
     "gridMenu":[
         {
-            "name":"新手指引",
-            "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu1.png"
-        },
-        {
-            "name":"每日签到",
+            "name":"我的配资",
             "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu3.png",
             "path":""
         },
         {
-            "name":"推广赚钱",
-            "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu5.png",
+            "name":"站内信息",
+            "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu1.png"
+        },
+        {
+            "name":"在线客服",
+            "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu1.png",
             "path":"/user/reg"
         },
         {
-            "name":"关于我们",
-            "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu5.png",
+            "name":"APP下载",
+            "icon":"https://m.pz77.com/Style/Wap/imagenjs/nindex-menu1.png",
             "path":"/user/login"
         }
 

@@ -21,8 +21,8 @@
                   <p>单笔金额下限{{item.min}},上限{{item.max}}</p>
                 </div>
                 <div class="selectBox">
-                  <i v-if="payIndex == index" class="font_family icon-dagou"></i>
-                  <i v-else class="font_family icon-weigouxuan1"></i>
+                  <i v-if="payIndex == index" class="font_family icon-dagou icon-style"></i>
+                  <i v-else class="font_family icon-weigouxuan1 icon-style"></i>
                 </div>
               </div>
             </div>
@@ -36,7 +36,7 @@
           </span>
 
           <div style="text-align:center">
-            <img class="scanImg" slot="header" :src="'/payment/rg_qrcode/' + payInfo.code_img" />
+            <img class="scanImg" slot="header" :src="payInfo.code_url" />
             <div slot="content" class="card-padding">
               <p class="p1 redFont">
                 <span>账户名: {{payInfo.name}}</span>
@@ -86,22 +86,20 @@
               <van-field v-model="money" placeholder="请输入充值金额" label="充值金额" type="number"/>
             </van-cell-group>
             <van-cell-group>
-              <van-field v-model="date" placeholder="点击选择时间" label="转账时间" @click="showPopup"/>
-            </van-cell-group>
-            <van-popup v-model="show" position="bottom">
-              <van-datetime-picker
-                v-model="dateTime"
-                type="datetime"
-                @confirm="confirm"
-                @cancel="cancel"
-              /> 
-            </van-popup>
+              <van-field v-model="date" placeholder="点击选择时间" label="转账时间" @click="showPopup" readonly/>
+            </van-cell-group>           
           </div>
-          <div class="submitBox">
-            <van-button type="info" @click.native="payAction">提交充值</van-button>
-          </div>
+          <div class="btn-common" @click="payAction">提交充值</div>
       </div>
     </scroll>
+    <van-popup v-model="show" position="bottom">
+      <van-datetime-picker
+        v-model="dateTime"
+        type="datetime"
+        @confirm="confirm"
+        @cancel="cancel"
+      /> 
+    </van-popup>
   </div>
 </template>
 
@@ -222,7 +220,6 @@ export default {
             });
           }
       });
-
     },
 
     //支付名称判断 根据type值
@@ -286,25 +283,11 @@ export default {
 
 .user-content {
   margin: px2rem(30px) 0;
-
   /deep/ label {
     width: px2rem(150px) !important;
   }
-}
-
-.submitBox {
-  margin-top: px2rem(88px);
-  padding: 0 px2rem(48px);
-  button {
-    height: px2rem(74px);
-    line-height: px2rem(74px);
-    border-radius: 4px;
-    width: 100%;
-    background-color: $home-color;
-    border: none;
-    color: #fff;
-    font-size: px2rem(30);
-    font-weight: 500;
+  .van-cell{
+    font-size: px2rem(33px);
   }
 }
 
@@ -312,7 +295,7 @@ export default {
   padding: px2rem(30px);
   color: #ff0000;
   display: block;
-  font-size: px2rem(30px);
+  font-size: px2rem(32px);
 }
 
 .scanImg {
@@ -335,7 +318,7 @@ export default {
   }
 
   p.p1 {
-    font-size: px2rem(24px);
+    font-size: px2rem(32px);
     line-height: px2rem(50px);
     span {
       display: inline-block;
@@ -346,7 +329,7 @@ export default {
 
   p.p2 {
     color: #333;
-    font-size: px2rem(24px);
+    font-size: px2rem(32px);
     line-height: px2rem(40px);
     span {
       display: inline-block;
@@ -357,7 +340,7 @@ export default {
 
   p.p3 {
     color: #999;
-    font-size: px2rem(24px);
+    font-size: px2rem(32px);
     line-height: px2rem(40px);
   }
 }
@@ -367,9 +350,10 @@ export default {
 }
 
 .scanpayPage {
+  padding-bottom: px2rem(40px);
   .title {
     padding: px2rem(20px) px2rem(30px);
-    font-size: px2rem(28px);
+    font-size: px2rem(34px);
     color: #999;
   }
 }
@@ -386,7 +370,6 @@ export default {
     overflow: hidden;
     border-bottom: 1px solid #ddd;
     background: #fff;
-    font-size: px2rem(30px);
 
     div {
       &.header {
@@ -403,7 +386,6 @@ export default {
           align-items: center;
           background-color: #4bb6ee;
           width: 100%;
-          font-size: px2rem(35px);
           font-weight: 600;
           height: 100%;
           color: #fff;
@@ -419,7 +401,7 @@ export default {
         line-height: px2rem(35px);
 
         p {
-          font-size: px2rem(20px);
+          font-size: px2rem(32px);
           color: #999999;
         }
 
@@ -439,21 +421,24 @@ export default {
         .icon-weigouxuan1 {
           color: #bbbbbb;
         }
+        .icon-style{
+          font-size: px2rem(40px);
+        }
       }
     }
   }
 }
 
 .logo {
-  width: px2rem(100px);
+  width: px2rem(120px);
   display: flex;
   margin-right: px2rem(10px);
   justify-content: center;
   align-items: center;
 
   img {
-    height: px2rem(100px);
-    width: px2rem(100px);
+    height: px2rem(120px);
+    width: px2rem(120px);
   }
 }
 </style>

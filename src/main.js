@@ -1,18 +1,18 @@
 // The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias
+import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
 import VueClipboard from 'vue-clipboard2'//复制
-import 'vue-area-linkage/dist/index.css'; // v2 or higher
-import VueAreaLinkage from 'vue-area-linkage';
+import axios from "axios"
 
 import { 
   Checkbox,DropdownMenu, DropdownItem,
   CheckboxGroup,Collapse, CollapseItem,
   Row, ActionSheet, Loading,
-  Col, 
+  Col, Divider, Area,
   Tag,
   Cell, 
   CellGroup,
@@ -49,14 +49,19 @@ Vue.use(DropdownMenu).use(DropdownItem);
 Vue.use(Collapse).use(CollapseItem);
 Vue.use(ActionSheet);
 Vue.use(Loading);
+Vue.use(Divider);
+Vue.use(Area);
 
 Vue.use(VueClipboard);
-Vue.use(VueAreaLinkage);
-
 Vue.prototype.$notify = Notify;
 Vue.prototype.$Toast  = Toast ;
 Vue.prototype.$Dialog  = Dialog ;
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest';
+Vue.prototype.$http = axios;
+
 
 import '@/assets/css/reset.scss'
 import '@/assets/css/icon/iconfont.css'
@@ -69,6 +74,14 @@ new Vue({
   store,
   components: { App },
   template: '<App/>',
+  created() {
+    // 判断是否登录
+    store.dispatch('isLogin')
+    // 获取基础数据
+    store.dispatch('setting')
+    //杠杆倍数
+    store.dispatch('loansrate')
+  },
   methods: {
     salcFontSize() {
       let width = window.innerWidth;

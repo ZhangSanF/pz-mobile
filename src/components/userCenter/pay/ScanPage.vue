@@ -54,7 +54,7 @@ export default {
 }
 .title{
   padding: px2rem(20px) px2rem(30px);
-  font-size: px2rem(28px);
+  font-size: px2rem(34px);
   color: #999;
 }
 .info {

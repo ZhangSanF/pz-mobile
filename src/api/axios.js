@@ -2,6 +2,7 @@ import axios from "axios"
 import store from '@/store';
 import {  Notify } from 'vant'
 import router from '@/router'
+import Spin  from '@/components/common/spin'
 let cancel,
     promiseArr = {};
 const CancelToken = axios.CancelToken;
@@ -10,12 +11,14 @@ axios.defaults.baseURL = "/";
 //设置默认请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.timeout = 25000;
+console.log();
 
 let urlTimer = {};
 export default {
   //get请求
   get(urlObj, param) {
     if (urlObj.isOpenLoading) {
+      Spin.show()
     }
     return new Promise((resolve, reject) => {
         axios({
@@ -31,9 +34,11 @@ export default {
             cancel = c;
           })
         }).then(res => {
+          Spin.hide()
           if (res && res.data) { 
             resolve(res && res.data);
             store.commit('SHOW_LOADMORE', false)
+            store.commit('TOP_REFRESH', false)
           }else if(res) {
             resolve(res);
           }
@@ -43,6 +48,7 @@ export default {
   //put请求
   put(urlObj, param ) {
     if (urlObj.isOpenLoading) {
+      Spin.show()
     }
     return new Promise((resolve, reject) => {
       clearTimeout(urlTimer[urlObj.url]);
@@ -60,6 +66,7 @@ export default {
             cancel = c;
           })
         }).then(res => {
+          Spin.hide()
           if (res && res.data) { 
             resolve(res && res.data);
           }else if(res) {
@@ -74,6 +81,7 @@ export default {
   post(urlObj, param, isChangeHeader = false) {
     if (urlObj.isOpenLoading) {
       // todo 待实现
+      Spin.show()
     }
     return new Promise((resolve, reject) => {
       axios({
@@ -85,8 +93,10 @@ export default {
           cancel = c;
         })
       }).then(res => {
+        Spin.hide()
         if (res && res.data) { 
           resolve(res && res.data);
+          store.commit('SHOW_LOADMORE', false)
         }else if(res) {
           resolve(res);
         }

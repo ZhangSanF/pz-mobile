@@ -17,7 +17,7 @@
                 </p>
             </router-link>
             <router-link to="/setPhone" tag="li" class="list-item">
-                <p>手机绑定</p>
+                <p>修改手机</p>
                 <p>
                     <span class="right-state">{{getUserInfo.mobile}}</span>
                     <span class="font_family icon-youjiantou icon-style"></span>
@@ -45,6 +45,7 @@
                 </p>
             </router-link>
         </ul>
+        <div class="btn-common" @click="exitLogin">退出登录</div>
       </scroll>
   </div>
 </template>
@@ -62,7 +63,10 @@ export default {
         }
     },
     methods: {
-
+        ...mapActions(['logout']),
+        exitLogin() {
+            this.logout()
+        }
     },
     mounted() {
         this.$nextTick(() => {
@@ -86,11 +90,11 @@ export default {
             padding: px2rem(20px) px2rem(30px) px2rem(20px) 0;
             border-bottom: px2rem(1px) solid $home-line-color;
             align-items: center;
-            font-size: px2rem(28px);
+            font-size: px2rem(33px);
             color: #333;
             .icon-style{
                 color: #999;
-                font-size: px2rem(20px);
+                font-size: px2rem(26px);
             }
             .right-state{
                 display: inline-block;

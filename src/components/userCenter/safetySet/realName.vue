@@ -7,21 +7,17 @@
           <li class="list-item">
             <p>姓名</p>
             <div class="right">
-                <van-cell-group>
-                    <van-field :value="getUserInfo.real_name" disabled/>
-                </van-cell-group>
+              <span class="info">{{getUserInfo.real_name}}</span>
             </div>
           </li>
           <li class="list-item">
             <p>身份证</p>
             <div class="right">
-                <van-cell-group>
-                    <van-field :value="getUserInfo.identity_number" disabled/>
-                </van-cell-group>
+              <span class="info">{{getUserInfo.identity_number}}</span>
             </div>
           </li>
         </ul>
-        <div class="real-btn">已认证</div>
+        <div class="btn-common">已认证</div>
     </div>
     <div class="real-list" v-else>
         <div class="title">请填写身份证信息</div>
@@ -43,7 +39,7 @@
             </div>
           </li>
         </ul>
-        <div class="real-btn" @click="SubmitRealName">立即认证</div>
+        <div class="btn-common" @click="SubmitRealName">立即认证</div>
     </div>
   </div>
 </template>
@@ -71,6 +67,7 @@ export default {
         }
         this.realNameAuth(params).then(res=>{
           if(res.code == 200){
+            this.$router.replace('/safetySet')
             this.$Toast.success(res.message)
             let identity_number = params.identity_number.slice(0,4) + '****' + params.identity_number.slice(-4)
             this.$store.commit('REAL_NAME', {is_real_name: true, real_name: params.real_name, identity_number: identity_number})
@@ -89,12 +86,13 @@ export default {
 
 <style lang="scss" scoped>
 .real-list{
-  font-size: px2rem(28px);
   .title{
     padding: px2rem(20px) px2rem(30px);
     color: #999;
+    font-size: px2rem(34px);
   }
   .ul-box{
+    font-size: px2rem(33px);
     padding-left: px2rem(30px);
     background: #fff;
     .list-item{
@@ -107,34 +105,26 @@ export default {
       align-items: center;
       .right{
         overflow: hidden;
-        width: px2rem(450px);
+        width: px2rem(500px);
         display: flex;
         justify-content: space-between;
         align-items: center;
         height: px2rem(78px);
+        .info{
+          color: #666;
+        }
       }
     }   
     .list-item:last-child{
       border-bottom: none;
     }
   }
-  .real-btn{
-        margin: px2rem(30px) px2rem(48px) 0;
-        background: $home-color;
-        border-radius: 4px;
-        color: #fff;
-        text-align: center;
-        font-size: px2rem(26px);
-        padding: px2rem(20px) 0;
-    }
 }
-</style>
-<style lang="scss" scoped>
 .real-name{
-    .van-cell-group{
-        .van-cell{
-            padding: 0;
-        }
+  .van-cell-group{
+    .van-cell{
+      padding: 0;
+    }
   }
   .van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
     border: none

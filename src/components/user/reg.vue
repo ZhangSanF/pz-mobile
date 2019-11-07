@@ -4,34 +4,54 @@
       {{errorMessage}}
     </van-row>
     <van-cell-group>
-      <van-field v-model="form.username" 
-      left-icon="contact" 
-      clearable  
-      clickable
-      required
-      @blur="checkName"
-      placeholder="请填写用户名(字母数字组合)" />
       <van-field 
-      left-icon="contact"
-      v-model="form.phone" 
-      clearable
-      clickable
-      required
-      type="tel" 
-      class="mobileCode"
-      placeholder="请输入手机号" />
+        v-model.trim="form.username" 
+        left-icon="contact" 
+        clearable  
+        clickable
+        size="large"
+        @blur="checkName"
+        placeholder="请填写用户名" />
       <van-field 
-      clickable
-      required
-      v-model="form.sms" 
-      left-icon="contact"
-      placeholder="请输入验证码">
+        clickable
+        clearable
+        size="large"
+        v-model.trim="form.password" 
+        :type="passWordType" 
+        left-icon="records"
+        :right-icon="passWordType === 'password' ?'closed-eye':'eye-o'"
+        @click-right-icon="passWordType = passWordType === 'text' ? 'password' :'text'"
+        placeholder="请输入密码" />
+      <van-field 
+        size="large"
+        v-model.trim="form.repassword"
+        :type="confirmType" 
+        left-icon="records"
+        clearable
+        :right-icon="confirmType === 'password' ?'closed-eye':'eye-o'"
+        clickable
+        @click-right-icon="confirmType = confirmType === 'text' ? 'password' :'text'"
+        placeholder="请再次输入密码" />
+      <van-field
+        size="large"
+        left-icon="phone-o"
+        v-model.trim="form.phone" 
+        clearable
+        clickable
+        type="tel" 
+        class="mobileCode"
+        placeholder="请输入11位大陆手机号" />
+        <van-field 
+        clickable
+        v-model.trim="form.sms" 
+        left-icon="envelop-o"
+        placeholder="请输入手机验证码">
         <van-button 
           slot="button" 
           @click="getCode" 
           size="small" 
           v-show="isShowSmsCode == 'one'" 
-          type="primary">发送验证码</van-button>
+          type="primary">获取手机验证码</van-button>
         <van-button 
           slot="button" 
           v-if="isShowSmsCode == 'two'" 
@@ -41,20 +61,20 @@
           v-if="isShowSmsCode == 'three'" 
           size="small" 
           type="primary">
-          {{smsCodeNumber}}秒</van-button>
+          重新获取({{smsCodeNumber}})</van-button>
         <van-button 
           slot="button" 
           @click="getCode" 
           v-if="isShowSmsCode == 'four'" 
           size="small" 
-          type="primary">重新获取验证码</van-button>
+          type="primary">重新获取</van-button>
       </van-field>
       <van-field
-          left-icon="envelop-o"
-          required
-          v-model="form.captcha"  
-          clickable 
-          placeholder="请填写验证码" >
+          size="large"
+          v-model.trim="form.captcha"  
+          clickable
+          left-icon="coupon-o"
+          placeholder="请输入验证码" >
           <van-image
             :src="verifySrc" 
             @click="getVerifyFun"
@@ -62,42 +82,16 @@
             slot="button"
           />
       </van-field>
-      <van-field 
-      clickable
-      required
-      v-model="form.password" 
-      :type="passWordType" 
-      left-icon="contact"
-      right-icon="closed-eye"
-      @click-right-icon="passWordType = passWordType === 'text' ? 'password' :'text'"
-      placeholder="请填写登录密码" />
-      <van-field 
-      v-model="form.repassword"
-      :type="confirmType" 
-      left-icon="contact"
-      required
-      right-icon="closed-eye"
-      clickable
-      @click-right-icon="confirmType = confirmType === 'text' ? 'password' :'text'"
-      placeholder="请确认登录密码" />
-      <van-field 
-      v-model="form.referee" 
-      left-icon="contact"
-      clickable
-      placeholder="填写推荐人(如果没有,可不填写)" />
+
       <van-cell>
         <template slot="title">
-          <van-checkbox class="read"  icon-size ="20px"  v-model="form.checkedClause">
+          <van-checkbox class="read"  icon-size ="16px"  v-model="form.checkedClause">
             我已阅读并同意
-            <router-link class="protocol"  to="/">用户注册协议</router-link>
+            <router-link class="protocol" to="/regProtocol">用户注册协议</router-link>
           </van-checkbox>
         </template>
       </van-cell>
-      <van-cell>
-        <van-button 
-        @click="submitReg"
-        class="regBtn carryOut">立即注册</van-button>
-      </van-cell>
+      <div class="btn-common"   @click="submitReg" >立即注册</div>
     </van-cell-group>
   </div>
 </template>
@@ -128,6 +122,7 @@ export default {
       verifySrc: '',
       smsCodeNumber: '60',
       errorMessage:'',
+      canSave: false,
     };
   },
   methods: {
@@ -173,7 +168,7 @@ export default {
       console.log(e.target.value);
     },
     submitReg(){
-      if(!this.form.checkedClause) return this.$notify(`请勾选注册服务协议`);
+      if(!this.form.checkedClause) return this.$notify(`请阅读并同意注册协议`);
       this.checkFrom()
       if(!this.canSave) return false
       if(this.isShowSmsCode == 'three' || this.isShowSmsCode == 'four') {
@@ -194,14 +189,16 @@ export default {
                   this.$notify(res.message)
                   this.getMemberinfo()
                   this.$store.commit('IS_LOGIN', true)
+                  this.$notify(res.message);
                   this.$router.push({path:'/'})
+
               }else {
                   this.getVerifyFun()
               }
           })
 
       }else {
-        this.errorMessage = '请点击发送验证码'
+        this.errorMessage = '请获取短信验证码'
       }
     },
     getVerifyFun() {
@@ -227,7 +224,7 @@ export default {
 }
 .reg {
   color: #999;
-  font-size: px2rem(14px) ;
+  font-size: px2rem(33px) ;
 }
 .verifyImage{
     min-width: 0.8rem;
@@ -256,21 +253,20 @@ export default {
 .van-cell__title .van-field__label {
   width: 0 !important;
 }
-.regBtn{
-  width:  100% ;
-  font-size: px2rem(30px) ;
-  border-radius: px2rem(8px) ;
-  color:#fff;
-  height: px2rem(75px) ;
-  line-height:  px2rem(75px) ;
-}
 .protocol {
   color: #64a9Fe;
-  font-size: px2rem(24px) ;
+  font-size: px2rem(28px) ;
 }
 .errorMessage{
    text-align: center;
    color:rgb(253,89,30);
-   font-size: px2rem(24px) ;
+   font-size: px2rem(26px) ;
+   padding: 0 px2rem(30px) ;
+}
+.van-cell{
+  font-size: px2rem(33px) !important;
+}
+.read{
+     font-size: px2rem(28px) ;
 }
 </style>

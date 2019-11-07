@@ -17,12 +17,10 @@ export default {
     window.addEventListener("beforeunload",()=>{
         sessionStorage.setItem("store",JSON.stringify(this.$store.state))
     })
-    this.loansrate()//杠杆倍数
     this.getAdvertisement({}) //轮播
-    this.setting()
   },
   methods: {
-    ...mapActions(['getAdvertisement', 'setting','loansrate']),
+    ...mapActions(['getAdvertisement']),
   }
 };
 </script>
@@ -38,6 +36,6 @@ export default {
 .unrem-app{
   width: 100%;
   height: 100%;
-  max-width: 600px;
+  // max-width: 600px;
 }
 </style>

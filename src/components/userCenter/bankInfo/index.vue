@@ -55,7 +55,7 @@ export default {
     background: #fff;
     border-radius: 5px;
     text-align: center;
-    font-size: px2rem(26px);
+    font-size: px2rem(31px);
     color: #999;
     padding-bottom: px2rem(20px);
     padding-top: px2rem(15px);
@@ -65,24 +65,24 @@ export default {
 }
 .have-bank{
     background: #fff;
-    padding: px2rem(30px) px2rem(25px);
-    font-size:  px2rem(26px);
-    // margin-top: px2rem(20px);
-    .title{
+    padding: px2rem(30px) px2rem(25px);       
+    .title{     
+        font-size:  px2rem(34px);   
         color: #333;
         font-weight: bold;
         margin-bottom: px2rem(30px);
     }
     .bank-card{
         box-sizing: border-box;
-        height: px2rem(170px);
+        height: px2rem(220px);
         background: #414a81;
         border-radius: 6px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         padding: px2rem(30px);
-        .name{
+        font-size: px2rem(31px);
+        .name{            
             color: #fff;
         }
         .number{

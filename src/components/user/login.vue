@@ -1,9 +1,7 @@
 <template>
   <div class="login">
     <div class="logoBox">
-      <span class="logo">
-      </span>
-      <!-- <van-image lazy-load  /> -->
+      <img class="" src="../../assets/images/noavatar_middle.gif" alt="">
     </div>
     <van-row v-show="errorMessage!==''" class="errorMessage">
       {{errorMessage}}
@@ -11,28 +9,33 @@
     <van-cell-group>
       <van-field
         ref="userName"
-        v-model="form.username"
+        size="large"
+        v-model.trim="form.username"
         clearable
         clickable
         left-icon="contact"
-        placeholder="请输入用户名,字母开头,6-16位"
+        placeholder="请输入用户名"
       >
       </van-field>
       <van-field
+        size="large"
         ref="password"
-        v-model="form.password"
+        v-model.trim="form.password"
         :type="passWordType"
         left-icon="records"
         clickable
-        placeholder="请填写密码,6-20位字母和数字组合"
-        right-icon="closed-eye"
+        clearable
+        placeholder="请填写密码"
+        :right-icon="passWordType === 'password' ?'closed-eye':'eye-o'"
         @click-right-icon="passWordType = passWordType === 'text' ? 'password' :'text'"
       >
       </van-field>
       <van-field
+          size="large"
           left-icon="envelop-o"
-          v-model="form.captcha"  
-          clickable  
+          v-model.trim="form.captcha"  
+          clickable
+          v-show="getSettingSystem.sys.close_login_captcha !== '1'"
           placeholder="请填写验证码" >
           <van-image
             :src="verifySrc" 
@@ -42,11 +45,7 @@
           />
       </van-field>
     </van-cell-group>
-    <van-row type="flex" justify="space-around">
-      <van-col span="24" class="loginCol">
-        <van-button class="loginBtn"  size="small" @click="submitLogin" >登录</van-button>
-      </van-col>
-    </van-row>
+    <div class="btn-common"  @click="submitLogin" >登录</div>
     <van-row type="flex" justify="space-around">
       <van-col span="12" class="findpassCol">
         <van-button class="findpass" to="findpass" size="small" >忘记密码</van-button>
@@ -60,7 +59,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions,mapGetters  } from "vuex";
 import { userMixin} from "./mixins/mixin"
 import md5 from 'js-md5';
 export default {
@@ -87,6 +86,7 @@ export default {
       submitLogin(){
           this.checkFrom()
           if(!this.canSave) return false
+          this.passWordType = 'password'
           const md5Password = {
               password: md5(this.form.password),
           }
@@ -103,6 +103,7 @@ export default {
                   }else {
                       redirect = '/'
                   }
+                  this.$notify(res.message);
                   this.$router.push(redirect)
                   this.canSave = true
               }else {
@@ -124,6 +125,11 @@ export default {
   },
   created() {
       this.getVerifyFun()
+  },
+  computed:{
+    ...mapGetters([
+      'getSettingSystem',
+    ]),
   },
 };
 </script>
@@ -161,27 +167,27 @@ export default {
 }
 .loginBtn{
   width:  100% ;
-  font-size: px2rem(30px) ;
+  font-size: px2rem(40px) ;
   border-radius: px2rem(8px) ;
   color:#fff;
   background-color: #FD591E;
-  height: px2rem(75px) ;
+  height: px2rem(80px) ;
 }
 .findpassCol {
   text-align: right;
   .findpass{
-    font-size: px2rem(30px) ;
+    font-size: px2rem(33px) ;
     border: none !important;
     padding-right: 0;
     color: #999999;
   }
   .findpassSpan{
-    font-size: px2rem(32px) ;
+    font-size: px2rem(33px) ;
   }
 }
 .regCol{
   .reg{
-    font-size: px2rem(30px) ;
+    font-size: px2rem(33px) ;
     
     color: #FD591F;
     border: none !important;
@@ -205,6 +211,10 @@ export default {
 .errorMessage{
    text-align: center;
    color:rgb(253,89,30);
-   font-size: px2rem(24px) ;
+   font-size: px2rem(26px) ;
+   padding: 0 px2rem(30px) ;
+}
+.van-cell{
+   font-size: px2rem(33px) !important ;
 }
 </style>

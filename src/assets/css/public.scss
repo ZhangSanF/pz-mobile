@@ -1,5 +1,5 @@
 @function px2rem($px,$flag:true){ //$flag => true 表示正数  反之 负数
-    $rem : 64px;
+    $rem : 75px;
     @if($flag){
         @return ($px/$rem) + rem;
     }
@@ -29,10 +29,34 @@ $home-line-color :#e3e3e3;
 }
 // tab
 .van-tab{
-    font-size: px2rem(26px);
+    font-size: px2rem(30px);
     color: #666;
 }
 .van-tabs__line{
     height: px2rem(2px);
     background-color: $home-color;
+}
+.van-overlay{
+    z-index: 2013 !important;
+}
+.van-popup{
+    z-index: 2014 !important;
+}
+.van-notify--danger{
+    z-index: 3000 !important;
+}
+.van-dialog{
+    z-index: 3000 !important;
+}
+// 提交按钮
+.btn-common{
+    width: px2rem(637px);
+    height: px2rem(82px);
+    line-height: px2rem(82px);
+    background: $home-color;
+    border-radius: 4px;
+    color: #fff;
+    text-align: center;
+    font-size: px2rem(35px);
+    margin: px2rem(40px) auto;
 }

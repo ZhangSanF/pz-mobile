@@ -58,5 +58,8 @@ export default {
     font-size: px2rem(50px) ;
   }
 }
+.van-nav-bar__title{
+  font-size: px2rem(40px) !important;
+}
 
 </style>
