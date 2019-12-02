@@ -94,32 +94,32 @@
             :class="shangZhengUpDown ? 'quotesUp' : 'quotesDown'"
             >
             <p  class="quoteName">
-              {{shangZhengZhiShuYesToday[0]}}
+              {{shangZhengZhiShuToday[0]}}
             </p>
-            <p  class="quoteNum">{{shangZhengZhiShuYesToday[1] |number}}
+            <p  class="quoteNum">{{shangZhengZhiShuToday[1] |number}}
             <img class="upDownImg" v-if="shangZhengUpDown" src="../assets/images/indexUp.png" alt="">
             <img class="upDownImg" v-if="!shangZhengUpDown" src="../assets/images/indexDown.png" alt="">
             </p>
             <p class="quoteValue">
-              <span>{{shangZhengZhiShuYesToday[2] |number}}</span>
-              <span>{{shangZhengZhiShuYesToday[3] |number}}%</span>
+              <span>{{shangZhengZhiShuToday[2] |number}}</span>
+              <span>{{shangZhengZhiShuToday[3] |number}}%</span>
             </p>
           </van-grid-item>
           <van-grid-item
             @click="goQuotes"
             :class="huShenUpDown ? 'quotesUp' : 'quotesDown'"
             >
-            <p class="quoteName">{{huShenZhiShuYesToday[0]}}
+            <p class="quoteName">{{huShenZhiShuToday[0]}}
 
             </p>
 
-            <p class="quoteNum">{{huShenZhiShuYesToday[1] |number}}
+            <p class="quoteNum">{{huShenZhiShuToday[1] |number}}
             <img class="upDownImg" v-if="huShenUpDown" src="../assets/images/indexUp.png" alt="">
             <img class="upDownImg" v-if="!huShenUpDown" src="../assets/images/indexDown.png" alt="">
             </p>
             <p class="quoteValue">
-              <span>{{huShenZhiShuYesToday[2] |number}}</span>
-              <span>{{huShenZhiShuYesToday[3] |number}}%</span>
+              <span>{{huShenZhiShuToday[2] |number}}</span>
+              <span>{{huShenZhiShuToday[3] |number}}%</span>
             </p>
           </van-grid-item>
         </van-grid>
@@ -174,13 +174,13 @@ export default {
 
   created() {
     //上证当天数据
-    this.shangZhengZhiShuToday = hq_str_sh000001.split(',')
+    this.shangZhengZhiShuYesToday = hq_str_sh000001.split(',')
     //上证昨收数据
-    this.shangZhengZhiShuYesToday = hq_str_s_sh000001.split(',')
+    this.shangZhengZhiShuToday = hq_str_s_sh000001.split(',')
     //沪深当天数据
-    this.huShenZhiShuToday = hq_str_sz399001.split(',')
+    this. huShenZhiShuYesToday= hq_str_sz399001.split(',')
     //沪深昨收数据
-    this.huShenZhiShuYesToday = hq_str_s_sz399001.split(',')
+    this.huShenZhiShuToday = hq_str_s_sz399001.split(',')
     // this.goUp = sinaindustry_up
     // this.goDown = sinaindustry_down
     this.$nextTick(() => {
@@ -245,30 +245,21 @@ export default {
     contentData() {
       return testData.productData
     },
-    // 涨跌(最新指数比较昨收)
-    shangZhengUpDown() {
-      if(this.zhishu1[1] > this.zhishu2[2]) {//今日大于昨收
-        return true
-      }else {
-        return false
-      }
-    },
-   // 涨跌(最新指数比较昨收)
+   // 上证涨跌(最新指数比较昨收)
     shangZhengUpDown() {
       if(this.shangZhengZhiShuToday[1] > this.shangZhengZhiShuYesToday[2]) {//今日大于昨收
         return true
       }else {
         return false
       }
-      return true
     },
+     // 沪深涨跌(最新指数比较昨收)
     huShenUpDown() {
       if(this.huShenZhiShuToday[1] > this.huShenZhiShuYesToday[2]) {//今日大于昨收
         return true
       }else {
         return false
       }
-      return true
     },
   },
   mounted() {
